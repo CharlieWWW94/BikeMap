@@ -37,22 +37,22 @@ export default function Page2() {
   return (
     <Wrapper styling={"is-flex columns is-justify-content-space-between"}>
       <Map type={"parking"} locations={locations} focus={focusCard} />
-      <div
-        class="is-flex is-flex-direction-column column mr-4"
-        style={{
-          flexWrap: "nowrap",
-          overflow: "scroll",
-          scrollbarWidth: "none",
-          maxHeight: "95vh",
-        }}
-      >
-        {locations.length > 2 ? <MapDock /> : ""}
-
-        {!locCard ? (
-          locations.map((spot) => <ParkCard info={spot} />)
-        ) : (
-          <ParkCard info={locCard} />
-        )}
+      <div class="is-flex is-flex-direction-column column mr-4">
+        <div>{locations.length > 2 ? <MapDock /> : ""}</div>
+        <div
+          style={{
+            flexWrap: "nowrap",
+            overflow: "scroll",
+            scrollbarWidth: "none",
+            maxHeight: "70vh",
+          }}
+        >
+          {!locCard ? (
+            locations.map((spot) => <ParkCard info={spot} />)
+          ) : (
+            <ParkCard info={locCard} />
+          )}
+        </div>
       </div>
     </Wrapper>
   );

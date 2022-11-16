@@ -16,7 +16,7 @@ export default function TheftDock(props) {
           <input
             class="input is-warning"
             type="text"
-            placeholder="Search Thefts"
+            placeholder="Search a serial number"
           ></input>
         </p>
       </div>

@@ -7,14 +7,23 @@ import star from "../images/star.png";
 import dateIcon from "../images/calendar.png";
 import timeIcon from "../images/clock.png";
 import serial from "../images/pound-box.png";
+import FormFooter from "./FormFooter";
+import { useState, useEffect } from "react";
 export default function TheftCard(props) {
+  const [displayTipOff, setDisplayTipOff] = useState(false);
+
+  function toggleTipOff(event) {
+    event.preventDefault();
+    displayTipOff ? setDisplayTipOff(false) : setDisplayTipOff(true);
+  }
+
   let rating = [];
   for (let i = 0; i < props.info.safety; i++) {
     rating.push(1);
   }
 
   return (
-    <div className="card mb-3 m-3">
+    <div className="card mb-5 m-3">
       <div className="card-content columns is-multiline">
         <div className="column is-12">
           <p className="title is-6 mb-2">{props.info.name}</p>
@@ -30,7 +39,7 @@ export default function TheftCard(props) {
             <span className="icon">
               <img src={dateIcon}></img>
             </span>
-            <span>Date: {props.info.dateOfTheft}</span>
+            <span>{props.info.dateOfTheft.toString().slice(0, 10)}</span>
           </span>
         </div>
         <div className="column is-6">
@@ -41,7 +50,14 @@ export default function TheftCard(props) {
             <span>Time: {props.info.timeOfTheft}</span>
           </span>
         </div>
+        <p class="column">
+          Seen it for sale?{" "}
+          <a onClick={toggleTipOff}>
+            <span className="has-text-link">Inform the owner.</span>
+          </a>
+        </p>
       </div>
+      {displayTipOff ? <FormFooter /> : ""}
     </div>
   );
 }
