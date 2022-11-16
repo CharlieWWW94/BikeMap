@@ -1,4 +1,6 @@
 import { GoogleMap, MarkerF, LoadScript } from "@react-google-maps/api";
+import { useState, useEffect } from "react";
+import warningIcons from "../images/marker.png";
 
 const containerStyle = {
   width: "70%",
@@ -13,11 +15,19 @@ const center = {
 export default function Map(props) {
   return (
     <LoadScript googleMapsApiKey="">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-        <MarkerF position={{ lat: 51.5, lng: 0.15 }} />
-        <MarkerF position={{ lat: 51.4, lng: 0.15 }} />
-        <MarkerF position={{ lat: 51.4, lng: 0.17 }} />
-        <MarkerF position={{ lat: 51.6, lng: 0.21 }} />
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
+        {props.locations.map((location) => {
+          return (
+            <MarkerF
+              position={{ lat: location.lat, lng: location.lng }}
+              icon={props.type === "theft" ? warningIcons : ""}
+              title={location.name}
+              onClick={() => {
+                props.focus(location);
+              }}
+            />
+          );
+        })}
       </GoogleMap>
     </LoadScript>
   );

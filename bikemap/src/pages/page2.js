@@ -2,36 +2,43 @@ import Map from "../components/Map";
 import Wrapper from "../components/Wrapper";
 import MapDock from "../components/mapDock";
 import ParkCard from "../components/ParkCard";
-const parkingSpots = [
-  {
-    id: 1,
-    name: "Queensway Bridge",
-    safety: 3,
-    hasCCTV: "Yes",
-    footTraffic: "high",
-  },
-  {
-    id: 2,
-    name: "Stratford Highstreet",
-    safety: 4,
-    hasCCTV: "No",
-    footTraffic: "Medium",
-  },
-  {
-    id: 3,
-    name: "Westminster",
-    safety: 2,
-    hasCCTV: "Yes",
-    footTraffic: "low",
-  },
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Page2() {
+  const [locations, setLocations] = useState([]);
+  const [locCard, setLocCard] = useState("");
+
+  async function fetchLocations() {
+    const data = await axios.get("http://127.0.0.1:5001/map-info");
+    console.log(data.data);
+    setLocations(data.data);
+  }
+
+  function focusCard(location) {
+    setLocCard(location);
+  }
+
+  useEffect(() => {
+    fetchLocations();
+  }, []);
+
+  const reloadCount = Number(sessionStorage.getItem("reloadCount")) || 1;
+
+  useEffect(() => {
+    if (reloadCount < 2) {
+      sessionStorage.setItem("reloadCount", String(reloadCount + 1));
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem("reloadCount");
+    }
+  }, []);
+
   return (
-    <Wrapper styling={"is-flex"}>
-      <Map />
+    <Wrapper styling={"is-flex columns is-justify-content-space-between"}>
+      <Map type={"parking"} locations={locations} focus={focusCard} />
       <div
-        class="column is-4 is-flex is-flex-direction-column"
+        class="is-flex is-flex-direction-column column mr-4"
         style={{
           flexWrap: "nowrap",
           overflow: "scroll",
@@ -39,10 +46,13 @@ export default function Page2() {
           maxHeight: "95vh",
         }}
       >
-        <MapDock />
-        {parkingSpots.map((spot) => (
-          <ParkCard info={spot} />
-        ))}
+        {locations.length > 2 ? <MapDock /> : ""}
+
+        {!locCard ? (
+          locations.map((spot) => <ParkCard info={spot} />)
+        ) : (
+          <ParkCard info={locCard} />
+        )}
       </div>
     </Wrapper>
   );

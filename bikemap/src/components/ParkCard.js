@@ -11,7 +11,7 @@ export default function ParkCard(props) {
   }
 
   return (
-    <div className="card mb-3">
+    <div className="card mb-3 m-3">
       <div className="card-image">
         <figure className="image is-2by1">
           <img src={props.info.id % 2 ? parkImage : parkImage2}></img>
@@ -19,7 +19,7 @@ export default function ParkCard(props) {
       </div>
       <div className="card-content">
         <p className="title is-6">{props.info.name}</p>
-        <div className="is-flex flex-direction-column is-flex-wrap-wrap">
+        <div className="is-flex flex-direction-column is-flex-wrap-wrap mr-6 is-justify-content-space-between">
           <span className="icon-text mr-6 mb-3">
             <span className="icon">
               <img src={safety}></img>
@@ -33,11 +33,11 @@ export default function ParkCard(props) {
               );
             })}
           </span>
-          <span className="icon-text">
+          <span className="icon-text mb-3">
             <span className="icon">
               <img src={camera}></img>
             </span>
-            <span>CCTV: {props.info.hasCCTV}</span>
+            <span>CCTV: {props.info.cctv ? "Yes" : "No"}</span>
           </span>
           <span className="icon-text">
             <span className="icon">

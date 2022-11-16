@@ -1,6 +1,6 @@
 export default function MapDock(props) {
   return (
-    <article class="panel">
+    <article class="panel mt-2  ">
       <p class="panel-heading has-text-centered">Bike Parking Spots</p>
       <p class="panel-tabs">
         <a class="is-active">Search</a>
