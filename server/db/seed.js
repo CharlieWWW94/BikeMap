@@ -1,7 +1,7 @@
 const db = require("./db");
 const MapItem = require("../models/MapItem");
 const Bike = require("../models/Bike");
-
+const User = require("../models/User");
 const MapItems = [
   {
     name: "Westminster",
@@ -76,6 +76,7 @@ const seed = async () => {
   theftArray.map(async (bike) => {
     await Bike.create(bike);
   });
+  await User.create({ username: "test", pwhash: "password" });
 };
 
 seed();
