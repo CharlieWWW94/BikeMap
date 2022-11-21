@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import map from "../images/map.png";
 import warning from "../images/alert.png";
-
+import LogInButton from "./LogInBtn";
+import UserDropDown from "./userDropDown";
 export default function Navbar(props) {
   return (
     <nav
@@ -41,6 +42,15 @@ export default function Navbar(props) {
                 Report
               </a>
             </Link>
+            {props.logInStatus ? (
+              <UserDropDown
+                userDetails={props.userDetails.username}
+                setUserDetails={props.setUserDetails}
+                setLogInStatus={props.setLogInStatus}
+              />
+            ) : (
+              <LogInButton />
+            )}
           </div>
         </div>
       </div>
