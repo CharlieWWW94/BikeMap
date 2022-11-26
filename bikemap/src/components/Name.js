@@ -1,10 +1,17 @@
 import account from "../images/account-circle.png";
 
 export default function Name(props) {
-  function clickHandler(event) {
+  function submitHandler(event) {
     event.preventDefault();
+    const firstName = event.target.firstName.value;
+    const surName = event.target.surName.value;
+    props.moveView({ firstName: firstName, surName: surName });
+  }
+
+  function skipHandler(event) {
     props.setFocalView(props.focalView + 1);
   }
+
   return (
     <div className="card column is-4 is-offset-4 mt-6 is-flex is-flex-direction-column is-justify-content-center">
       <div className="is-flex is-justify-content-center mt-5">
@@ -14,7 +21,11 @@ export default function Name(props) {
         <p className="title is-5 mt-2">What's your name?</p>
       </header>
       <div className="card-content is-flex is-flex-direction-column is-justify-content-center">
-        <form>
+        <form
+          onSubmit={(event) => {
+            submitHandler(event);
+          }}
+        >
           <input
             type="text"
             name="firstName"
@@ -34,7 +45,7 @@ export default function Name(props) {
           ></input>
         </form>
         <div className="is-flex is-justify-content-center mt-3">
-          <a onClick={clickHandler}>
+          <a onClick={skipHandler}>
             <p className="is-underlined has-text-link">Skip</p>
           </a>
         </div>

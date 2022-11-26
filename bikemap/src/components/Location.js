@@ -1,10 +1,27 @@
 import mapImage from "../images/map.png";
 
 export default function Location(props) {
+  function submitHandler(event) {
+    event.preventDefault();
+    const houseNameNum = event.target.house.value;
+    const streetName = event.target.street.value;
+    const cityName = event.target.city.value;
+    const postcode = event.target.postcode.value;
+    props.moveView({
+      address: [
+        { houseNameNum: houseNameNum },
+        { streetName: streetName },
+        { cityName: cityName },
+        { postcode: postcode },
+      ],
+    });
+  }
+
   function clickHandler(event) {
     event.preventDefault();
     props.setFocalView(props.focalView + 1);
   }
+
   return (
     <div className="card column is-4 is-offset-4 mt-6 is-flex is-flex-direction-column is-justify-content-center">
       <div className="is-flex is-justify-content-center mt-5">
@@ -14,7 +31,7 @@ export default function Location(props) {
         <p className="title is-5 mt-2">What's your address?</p>
       </header>
       <div className="card-content is-flex is-flex-direction-column is-justify-content-center">
-        <form>
+        <form onSubmit={(event) => submitHandler(event)}>
           <input
             type="text"
             name="house"

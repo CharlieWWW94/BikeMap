@@ -3,6 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 export default function BikeInfo(props) {
   const navigate = useNavigate();
+
+  function submitHandler(event) {
+    event.preventDefault();
+    const bikeModel = event.target.model.value;
+    const bikeSerial = event.target.model.serial;
+    const bikeColor = event.target.model.serial;
+    const bikeType = event.target.model.type;
+    props.moveView({
+      userBike: [
+        { bikeModel: bikeModel },
+        { bikeSerial: bikeSerial },
+        { bikeColor: bikeColor },
+        { bikeType: bikeType },
+      ],
+    });
+    console.log("done!");
+  }
+
   function clickHandler(event) {
     event.preventDefault();
     navigate("/2");
@@ -23,28 +41,28 @@ export default function BikeInfo(props) {
         </div>
       </div>
       <div className="card-content is-flex is-flex-direction-column is-justify-content-center">
-        <form>
+        <form onSubmit={(event) => submitHandler(event)}>
           <input
             type="text"
-            name="house"
+            name="model"
             className="input"
             placeholder="Make and model"
           ></input>
           <input
             type="text"
-            name="street"
+            name="serial"
             className="input mt-5"
             placeholder="Serial Number"
           ></input>
           <input
             type="text"
-            name="city"
+            name="color"
             className="input mt-5"
             placeholder="Color"
           ></input>
           <input
             type="text"
-            name="postcode"
+            name="type"
             className="input mt-5"
             placeholder="Type: Mountain, Road, Hybrid..."
           ></input>
